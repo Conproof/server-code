@@ -41,6 +41,12 @@ module.exports = function() {
 		}
 	}
 
+
+		function validateTokenBlank(req, res, next) {
+		// Handle secret admin access
+		next()
+	}
+
 	/**
 	 * @api {get} /employees/ Get all employees
 	 * @apiVersion 1.0.0
@@ -125,6 +131,27 @@ module.exports = function() {
 					res.send(_response);
 				}
 			});
+
+		} catch(e) {
+			errorHandling.handle(e, res);
+		}
+	});
+
+	App.Express.get("/:version/test", validateTokenBlank, function(req, res) {
+		try {
+			console.log("in")
+			// if(!req.params.employeeId) {
+			// 	throw { code: "NO_EMPLOYEE_ID" };
+			// }
+
+			// model.query("employees", { id: parseInt(req.params.employeeId) }, function(_response) {
+			// 	if(!_response.success) {
+			// 		errorHandling.handle(_response.error, res);
+			// 	} else {
+			// 		res.send(_response);
+			// 	}
+			// });
+		res.send("hey! this worked")
 
 		} catch(e) {
 			errorHandling.handle(e, res);
